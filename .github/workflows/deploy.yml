@@ -2,8 +2,9 @@ name: 🌐 Izaya Wear Site Deployment
 
 on:
   push:
-    branches: [ izaya-wear-lab ]
-  # Uncomment for PR preview builds
+    branches:
+      - izaya-wear-lab  # adjust as needed
+  # Uncomment to preview on PR
   # pull_request:
   #   branches: [ main ]
 
@@ -13,46 +14,48 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-deployment"
   cancel-in-progress: false
 
 jobs:
-  build:
+  build_site:
+    name: Build GitHub Pages Artifact
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Verify or create CNAME file
+      - name: Ensure CNAME File Exists
         run: |
           if [ -f "CNAME" ]; then
             echo "CNAME file exists:"
             cat CNAME
           else
-            echo "CNAME file not found. Creating it..."
+            echo "Creating CNAME file..."
             echo "izayawear.com" > CNAME
             echo "www.izayawear.com" >> CNAME
           fi
 
-      - name: Setup GitHub Pages environment
+      - name: Configure GitHub Pages Environment
         uses: actions/configure-pages@v3
 
-      - name: Skip Jekyll build
-        run: echo "No Jekyll build needed for static site"
+      - name: Skip Build (Static Site)
+        run: echo "No Jekyll build required for static site"
 
-      - name: Upload Pages artifact
+      - name: Upload Artifact for Deployment
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .
-          retention-days: 7  # optional, limits artifact retention
+          path: .              # Use `_site` or `dist` if you have a build folder
+          retention-days: 7    # optional, keeps artifacts for 7 days
 
-  deploy:
-    needs: build
+  deploy_site:
+    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    needs: build_site
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy Artifact
         id: deployment
         uses: actions/deploy-pages@v2
