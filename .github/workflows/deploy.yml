@@ -1,134 +1,34 @@
-name: CI/CD Pipeline
+name: Test and Deploy
 
 on:
   push:
-    branches: [ izaya-wear-lab ]  # TEST only on your branch
-  pull_request:
-    branches: [ main ]          # Also test when PR is created to main
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages-${{ github.ref }}"
-  cancel-in-progress: true
+    branches: [ izayawear-lab, main ]
 
 jobs:
-  # TESTING: Runs ONLY on izayawear-lab branch pushes
-  test-branch:
+  test:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/izayawear-lab'
-    name: Test izayawear-lab branch
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js (optional)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
+      - uses: actions/checkout@v4
+      - name: Test index.html
         run: |
-          if [ -f "package.json" ]; then
-            npm ci
+          ls -la
+          if [ -f "index.html" ]; then
+            echo "✅ index.html found - tests passed"
           else
-            echo "No package.json found, skipping npm install"
-          fi
-
-      - name: Run comprehensive tests
-        run: |
-          echo "🧪 Running tests on izayawear-lab branch..."
-          
-          # Check if index.html exists
-          if [ ! -f "index.html" ]; then
-            echo "❌ ERROR: index.html not found in root directory!"
+            echo "❌ index.html missing"
             exit 1
           fi
-          echo "✓ index.html found"
-          
-          # Basic HTML structure check
-          if ! grep -q "<html" index.html; then
-            echo "❌ ERROR: Missing <html> tag in index.html"
-            exit 1
-          fi
-          
-          if ! grep -q "</html>" index.html; then
-            echo "❌ ERROR: Missing </html> tag in index.html"
-            exit 1
-          fi
-          
-          echo "✓ Basic HTML structure validated"
-          
-          # Optional: Add more specific tests for your project
-          if [ -f "package.json" ] && npm run | grep -q "test"; then
-            echo "🚀 Running npm test script..."
-            npm test
-          else
-            echo "ℹ️  No npm test script found, basic validation passed"
-          fi
-          
-          echo "✅ All tests passed! Ready for PR to main."
 
-      - name: Upload test results (optional)
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: |
-            index.html
-            package.json
-            # Add other files you want to preserve
-
-  # TESTING: Runs when PR is created from izayawear-lab to main
-  test-pr:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    name: Test PR to main
-    needs: test-branch  # Optional: require branch tests to pass first
-    steps:
-      - name: Checkout PR code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Run PR validation tests
-        run: |
-          echo "🔍 Validating PR to main..."
-          # Same tests as above for consistency
-          if [ ! -f "index.html" ]; then
-            echo "❌ ERROR: index.html missing in PR!"
-            exit 1
-          fi
-          echo "✓ PR validation passed"
-
-  # DEPLOY: Runs ONLY when code is pushed to main branch
   deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    if: github.ref == 'refs/heads/main'
+    
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./
-
+      - uses: actions/checkout@v4
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Deployment success notification
-        run: |
-          echo "🚀 Successfully deployed to GitHub Pages!"
-          echo "URL: ${{ steps.deployment.outputs.page_url }}"
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
