@@ -3,73 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IZAYA WEAR — Modest & Modern Women's Clothing</title>
-  <meta name="description" content="IZAYA WEAR by IZAYA Group Ltd. — modest, modern and comfortable women's clothing made in Bangladesh." />
+  <title>IZAYA WEAR — Modest & Modern Clothing</title>
+  <meta name="description" content="IZAYA WEAR by IZAYA Group Ltd. — modest, modern, comfortable women's clothing in Bangladesh. Shop dresses, abayas, tops & more." />
   <link rel="icon" href="assets/images/favicon.ico" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
 </head>
 <body>
   <!-- Header -->
-  <header class="container">
-    <a class="brand" href="index.html">
-      <img src="assets/images/logo.png" alt="IZAYA WEAR logo" class="logo">
-      <div>
-        <strong>IZAYA WEAR</strong><br>
-        <small>Modest • Modern • Comfortable</small>
-      </div>
-    </a>
-    <nav>
-      <a href="collections.html">Collections</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a class="cta" href="collections.html">Shop</a>
-    </nav>
+  <header class="site-header">
+    <div class="container flex-between">
+      <a href="index.html" class="logo">
+        <img src="assets/images/logo.png" alt="IZAYA WEAR" />
+      </a>
+      <nav class="navbar">
+        <a href="collections.html">Collections</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a class="btn-primary" href="collections.html">Shop</a>
+      </nav>
+    </div>
   </header>
 
   <!-- Hero -->
-  <section class="hero container">
-    <div>
-      <h1>Modest & modern apparel for the everyday woman</h1>
-      <p>Discover dresses, tops, abayas and outerwear — crafted with comfort and modesty in mind. Nationwide delivery & global expansion soon.</p>
-      <a class="btn btn-primary" href="collections.html">Shop Now</a>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Modest & Modern Clothing for Women</h1>
+      <p>Designed in Bangladesh • Delivered worldwide soon</p>
+      <a href="collections.html" class="btn-primary">Shop Now</a>
     </div>
-    <div class="hero-image">
-      <img src="assets/images/hero-model.jpg" alt="IZAYA WEAR model">
+    <div class="hero-img">
+      <img src="assets/images/hero-banner.jpg" alt="IZAYA WEAR fashion model" />
     </div>
   </section>
 
   <!-- Featured Products -->
   <section class="container">
-    <h2>Featured</h2>
-    <div class="cards">
-      <div class="card">
-        <img src="assets/images/product1.jpg" alt="">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="assets/images/product1.jpg" alt="Dress" />
         <h3>A-line Dress</h3>
-        <span class="price">BDT 2,750</span>
+        <p class="price">BDT 2,750</p>
+        <button class="btn-outline add-cart">Add to Cart</button>
       </div>
-      <div class="card">
-        <img src="assets/images/product2.jpg" alt="">
+      <div class="product-card">
+        <img src="assets/images/product2.jpg" alt="Abaya" />
         <h3>Lightweight Abaya</h3>
-        <span class="price">BDT 3,100</span>
-      </div>
-      <div class="card">
-        <img src="assets/images/product3.jpg" alt="">
-        <h3>Tunic Top</h3>
-        <span class="price">BDT 1,650</span>
+        <p class="price">BDT 3,100</p>
+        <button class="btn-outline add-cart">Add to Cart</button>
       </div>
     </div>
   </section>
 
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <h2>Join Our Community</h2>
+    <form>
+      <input type="email" placeholder="Your email address" required />
+      <button type="submit" class="btn-primary">Subscribe</button>
+    </form>
+  </section>
+
   <!-- Footer -->
-  <footer class="container">
-    <div>
-      <strong>IZAYA WEAR</strong><br>
-      © 2025 IZAYA Group Ltd. — All rights reserved
-    </div>
-    <div class="socials">
-      <a href="https://facebook.com/izayawear" target="_blank">Facebook</a>
-      <a href="https://instagram.com/izayawear" target="_blank">Instagram</a>
+  <footer>
+    <div class="container flex-between">
+      <p>© 2025 IZAYA Group Ltd. — All rights reserved</p>
+      <div class="socials">
+        <a href="https://facebook.com/izayawear">Facebook</a>
+        <a href="https://instagram.com/izayawear">Instagram</a>
+      </div>
     </div>
   </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/cart.js"></script>
 </body>
 </html>
