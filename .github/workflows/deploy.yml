@@ -3,70 +3,36 @@ name: 🌐 Izaya Wear Site Deployment
 on:
   push:
     branches:
-      - izaya-wear-lab  # your deployment branch
-  # pull_request:
-  #   branches: [ main ]
+      - izaya-wear-lab  # test branch
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages-deployment"
-  cancel-in-progress: false
-
 jobs:
-  build_site:
-    name: 🏗️ Build GitHub Pages Artifact
+  build_and_upload:
+    name: 🏗️ Build and Upload Artifact
     runs-on: ubuntu-latest
-    outputs:
-      artifact-path: ${{ steps.set-path.outputs.artifact-path }}
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
       - name: 📝 Ensure CNAME File Exists
-        run: |
-          if [ -f "CNAME" ]; then
-            echo "CNAME file exists:"
-            cat CNAME
-          else
-            echo "Creating CNAME file..."
-            echo "izayawear.com" > CNAME
-            echo "www.izayawear.com" >> CNAME
-          fi
+        run: echo "izayawear.com" > CNAME
 
-      # Optional: build your site if needed
-      # - name: ⚡ Build Site
-      #   run: |
-      #     npm install
-      #     npm run build
-
-      - name: 🔍 Detect deployment folder
-        id: set-path
-        run: |
-          if [ -d "_site" ]; then
-            echo "artifact-path=_site" >> $GITHUB_OUTPUT
-          elif [ -d "dist" ]; then
-            echo "artifact-path=dist" >> $GITHUB_OUTPUT
-          else
-            echo "artifact-path=." >> $GITHUB_OUTPUT
-          fi
-          echo "Deployment folder set to: $artifact-path"
-
-      - name: ⚙️ Configure GitHub Pages Environment
+      - name: ⚙️ Configure GitHub Pages
         uses: actions/configure-pages@v3
 
       - name: 📦 Upload Pages Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ${{ steps.set-path.outputs.artifact-path }}
+          path: .       # change to ./_site if your site is generated
           retention-days: 7
 
-  deploy_site:
+  deploy:
     name: 🚀 Deploy to GitHub Pages
-    needs: build_site
+    needs: build_and_upload
     runs-on: ubuntu-latest
     environment:
       name: github-pages
