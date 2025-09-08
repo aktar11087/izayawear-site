@@ -2,9 +2,9 @@ name: 🌐 Izaya Wear Site Deployment
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ izayawear-lab ]
+  # pull_request:
+  #   branches: [ izayawear-lab ]
 
 jobs:
   deploy:
