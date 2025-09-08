@@ -27,8 +27,10 @@ jobs:
       - name: 📦 Upload Pages Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .       # change to ./_site if your site is generated
-          retention-days: 7
+          name: site-preview
+          path: |
+            index.html
+            style.css
 
   deploy:
     name: 🚀 Deploy to GitHub Pages
