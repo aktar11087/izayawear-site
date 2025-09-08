@@ -28,9 +28,9 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           name: site-preview
-          path: |
-            index.html
-            style.css
+          path: .
+          retention-days: 7
+          
 
   deploy:
     name: 🚀 Deploy to GitHub Pages
