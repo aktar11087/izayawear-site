@@ -1,24 +1,66 @@
 :root {
   --accent: #B45F4E;
   --muted: #6b7280;
-  --bg: #fff;
   --font: "Inter", sans-serif;
 }
 body {
-  margin: 0; font-family: var(--font); background: var(--bg); color: #111;
+  margin: 0;
+  font-family: var(--font);
+  color: #111;
+  background: #fff;
 }
 .container {
-  max-width: 1100px; margin: auto; padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
 }
-header {
-  display: flex; justify-content: space-between; align-items: center;
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-nav a { margin-left: 15px; text-decoration: none; color: var(--muted); }
-nav a.cta { background: var(--accent); color: #fff; padding: 8px 14px; border-radius: 6px; }
-.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
-.hero img { width: 100%; border-radius: 12px; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; margin-top: 12px; }
-.card { background: #f8f9fa; padding: 12px; border-radius: 10px; text-align: center; }
-.card img { width: 100%; border-radius: 8px; height: 220px; object-fit: cover; }
-.price { color: var(--accent); font-weight: bold; }
-footer { border-top: 1px solid #eee; margin-top: 20px; padding: 20px 0; font-size: 14px; display: flex; justify-content: space-between; }
+a { text-decoration: none; color: inherit; }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+.btn-outline {
+  border: 2px solid var(--accent);
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--accent);
+}
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 20px;
+}
+.hero-text { flex: 1; }
+.hero-img img { width: 100%; border-radius: 12px; }
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.product-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+.newsletter {
+  background: #f8f9fa;
+  padding: 40px 20px;
+  text-align: center;
+}
+footer {
+  background: #111;
+  color: #fff;
+  padding: 20px;
+}
+footer .socials a { margin-left: 12px; color: #fff; }
