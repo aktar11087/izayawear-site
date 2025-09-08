@@ -2,9 +2,9 @@ name: 🌐 Izaya Wear Site Deployment
 
 on:
   push:
-    branches: [ izayawear-lab ]
-  # pull_request:
-  #   branches: [ izayawear-lab ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -14,43 +14,28 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - name: 📦 Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: 📝 Ensure CNAME File Exists
+      - name: Verify CNAME file
         run: |
           if [ -f "CNAME" ]; then
-            echo "✅ CNAME file exists:"
+            echo "CNAME file exists"
             cat CNAME
           else
-            echo "⚠️ CNAME file missing — creating it"
+            echo "CNAME file does not exist - creating it"
             echo "izayawear.com" > CNAME
             echo "www.izayawear.com" >> CNAME
           fi
 
-      # Optional: Add build step if using a static site generator
-      # Uncomment and customize if needed
-      # - name: 🛠️ Build Site
-      #   run: npm run build
-
-      # Optional: Cache dependencies for faster builds
-      # Uncomment if using Node.js
-      # - name: ⚡ Cache Node Modules
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
-
-      - name: ⚙️ Configure GitHub Pages
+      - name: Setup Pages
         uses: actions/configure-pages@v2
-
-      - name: 📤 Upload Site Artifact
+        
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: '.'  # Adjust if your build output is in a subfolder like 'dist' or 'build'
-
+          path: '.'
+          
       - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
