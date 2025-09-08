@@ -1,23 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Izaya Wear</title>
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background: #f7f7fb; 
-      margin: 0; 
-      text-align: center;
-      padding: 3rem;
-    }
-    h1 { color: #0b5cff; }
-    p { color: #333; font-size: 1.2rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izayawear - Premium Fashion Collection</title>
+    <meta name="description" content="Discover Izayawear's premium fashion collection. Style meets comfort in every piece.">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <h1>Welcome to Izaya Wear 👕</h1>
-  <p>Our website is coming soon. Stay tuned!</p>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>IZAYAWEAR</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Welcome to Izayawear</h2>
+                <p>Where Style Meets Comfort</p>
+                <button class="cta-button" onclick="scrollToCollection()">Shop Now</button>
+            </div>
+        </section>
+
+        <section id="collection" class="collection">
+            <h2>Our Collection</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <h3>Premium Casual</h3>
+                    <p>Comfortable everyday wear</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <h3>Formal Elegance</h3>
+                    <p>Professional attire</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <h3>Street Style</h3>
+                    <p>Urban fashion trends</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Izayawear</h2>
+            <p>Izayawear is committed to bringing you the finest in contemporary fashion. Our curated collection combines quality materials with cutting-edge design.</p>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <p>&copy; 2024 Izayawear. All rights reserved.</p>
+        <p>Automatically deployed from GitHub</p>
+    </footer>
+
+    <script src="assets/script.js"></script>
 </body>
 </html>
