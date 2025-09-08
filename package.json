@@ -1,0 +1,11 @@
+{
+  "name": "izayawear-site",
+  "version": "1.0.0",
+  "description": "Official Izayawear website",
+  "scripts": {
+    "build": "mkdir -p dist && cp -r * dist/ && rm -rf dist/.git dist/node_modules 2>/dev/null || true",
+    "dev": "python3 -m http.server 8000 || python -m http.server 8000"
+  },
+  "keywords": ["fashion", "clothing", "izayawear"],
+  "author": "aktar11087"
+}
