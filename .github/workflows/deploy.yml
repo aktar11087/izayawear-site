@@ -1,4 +1,4 @@
-name: Deploy to Izaya Wear Pages
+name: 🌐 Izaya Wear Site Deployment
 
 on:
   push:
@@ -14,17 +14,43 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - name: Checkout
+      - name: 📦 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Setup Pages
+      - name: 📝 Ensure CNAME File Exists
+        run: |
+          if [ -f "CNAME" ]; then
+            echo "✅ CNAME file exists:"
+            cat CNAME
+          else
+            echo "⚠️ CNAME file missing — creating it"
+            echo "izayawear.com" > CNAME
+            echo "www.izayawear.com" >> CNAME
+          fi
+
+      # Optional: Add build step if using a static site generator
+      # Uncomment and customize if needed
+      # - name: 🛠️ Build Site
+      #   run: npm run build
+
+      # Optional: Cache dependencies for faster builds
+      # Uncomment if using Node.js
+      # - name: ⚡ Cache Node Modules
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
+
+      - name: ⚙️ Configure GitHub Pages
         uses: actions/configure-pages@v2
-        
-      - name: Upload artifact
+
+      - name: 📤 Upload Site Artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: '.'
-          
-      - name: Deploy to GitHub Pages
+          path: '.'  # Adjust if your build output is in a subfolder like 'dist' or 'build'
+
+      - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
