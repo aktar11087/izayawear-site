@@ -3,8 +3,7 @@ name: 🌐 Izaya Wear Site Deployment
 on:
   push:
     branches:
-      - izaya-wear-lab  # adjust as needed
-  # Uncomment to preview on PR
+      - izaya-wear-lab  # change to your branch
   # pull_request:
   #   branches: [ main ]
 
@@ -19,13 +18,13 @@ concurrency:
 
 jobs:
   build_site:
-    name: Build GitHub Pages Artifact
+    name: 🏗️ Build GitHub Pages Artifact
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Ensure CNAME File Exists
+      - name: 📝 Ensure CNAME File Exists
         run: |
           if [ -f "CNAME" ]; then
             echo "CNAME file exists:"
@@ -36,26 +35,32 @@ jobs:
             echo "www.izayawear.com" >> CNAME
           fi
 
-      - name: Configure GitHub Pages Environment
+      # Optional: Build your site if needed
+      # - name: ⚡ Build Site (Jekyll/NPM/Hugo)
+      #   run: |
+      #     npm install
+      #     npm run build
+
+      - name: 🔍 List Files for Deployment
+        run: ls -R  # Debug: ensure all files are present
+
+      - name: ⚙️ Configure GitHub Pages Environment
         uses: actions/configure-pages@v3
 
-      - name: Skip Build (Static Site)
-        run: echo "No Jekyll build required for static site"
-
-      - name: Upload Artifact for Deployment
+      - name: 📦 Upload Pages Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .              # Use `_site` or `dist` if you have a build folder
-          retention-days: 7    # optional, keeps artifacts for 7 days
+          path: ./         # Or ./_site or ./dist if using a build folder
+          retention-days: 7
 
   deploy_site:
-    name: Deploy to GitHub Pages
-    runs-on: ubuntu-latest
+    name: 🚀 Deploy to GitHub Pages
     needs: build_site
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy Artifact
+      - name: 🌍 Deploy Artifact
         id: deployment
         uses: actions/deploy-pages@v2
