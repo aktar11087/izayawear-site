@@ -1,56 +1,34 @@
-name: 🌐 Izaya Wear Site Deployment
+name: Test and Deploy
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ izayawear-lab, main ]
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+    if: github.ref == 'refs/heads/izayawear-lab'
+    
     steps:
-      - name: 📦 Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: 📝 Ensure CNAME File Exists
+      - uses: actions/checkout@v4
+      - name: Test index.html
         run: |
-          if [ -f "CNAME" ]; then
-            echo "✅ CNAME file exists:"
-            cat CNAME
+          ls -la
+          if [ -f "index.html" ]; then
+            echo "✅ index.html found - tests passed"
           else
-            echo "⚠️ CNAME file missing — creating it"
-            echo "izayawear.com" > CNAME
-            echo "www.izayawear.com" >> CNAME
+            echo "❌ index.html missing"
+            exit 1
           fi
 
-      # Optional: Add build step if using a static site generator
-      # Uncomment and customize if needed
-      # - name: 🛠️ Build Site
-      #   run: npm run build
-
-      # Optional: Cache dependencies for faster builds
-      # Uncomment if using Node.js
-      # - name: ⚡ Cache Node Modules
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
-
-      - name: ⚙️ Configure GitHub Pages
-        uses: actions/configure-pages@v2
-
-      - name: 📤 Upload Site Artifact
-        uses: actions/upload-pages-artifact@v1
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: '.'  # Adjust if your build output is in a subfolder like 'dist' or 'build'
-
-      - name: 🚀 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
